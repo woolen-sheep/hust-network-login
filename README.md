@@ -1,6 +1,6 @@
 # HUST-Network-Login
 
-极简主义的华中科技大学校园网络认证工具，支持有线和无线网络。下载即用，大小约为 400k，静态链接无依赖。为路由器等嵌入式设备开发，支持所有主流硬件软件平台。No Python, No Dependencies, No Bullshit.
+极简主义的华中科技大学校园网络认证工具，支持有线和无线网络。下载即用，大小约为 550k，静态链接无依赖。为路由器等嵌入式设备开发，支持所有主流硬件软件平台。No Python, No Dependencies, No Bullshit.
 
 ## 使用
 
@@ -23,7 +23,22 @@ mypasswordmypassword
 
 my.conf 是刚才的配置文件，你可以换成其他名字。
 
-连接成功后，程序将会每间隔 15s 测试一次网络连通性。如果无法连接则进行重新登陆。
+连接成功后，程序将测试一次网络连通性。如果无法连接则进行重新登陆。
+
+建议使用crontab运行程序：
+
+```text
+* * * * * /root/hust-network-login /root/account.conf >/root/login.log 2>&1
+0 * * * * echo "$(tail -n 1000 /root/login.log)" > /root/login.log
+```
+
+### 使用两个账号
+
+增加根据时间切换账号的功能
+
+~~我也不知道为什么有这种需求~~
+
+配置文件新增两行，为第二个账号。中国时间 `23:45` 至次日的 `7:00` 将切换为第二个账号。代价是编译产物体积增大。
 
 ## 编译
 
@@ -34,7 +49,7 @@ cargo build --release
 strip ./target/release/hust-network-login
 ```
 
-strip 可以去除调试符号表，将体积减少到 500k 以下。
+strip 可以去除调试符号表，将体积减少到 600k 以下。
 
 交叉编译推荐使用 `cross`，当然你也可以自己手动配置工具链。
 

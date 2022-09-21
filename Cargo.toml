@@ -7,6 +7,8 @@ edition = "2021"
 [dependencies]
 minreq = {version = "2.6", features = [], default-features = false}
 urlencoding = "2.1"
+chrono = "0.4"
+chrono-tz = "0.4"
 
 [profile.release]
 lto = "fat"
